@@ -8,8 +8,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.nn.functional import huber_loss
 
-from scripts.co_rl.core.modules import ActorCritic
-from scripts.co_rl.core.storage import SRMRolloutStorage as RolloutStorage
+from ..modules import ActorCritic
+from ..storage import SRMRolloutStorage as RolloutStorage
 
 import torch.nn.functional as F  # Functional module for loss functions and other utilities
 import matplotlib.pyplot as plt

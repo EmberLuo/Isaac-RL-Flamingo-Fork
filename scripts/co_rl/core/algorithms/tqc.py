@@ -3,12 +3,12 @@
 
 from __future__ import annotations
 
-from scripts.co_rl.core.algorithms.networks.tqc_network import GaussianPolicy, EnsembleQuantileCritic
-from scripts.co_rl.core.modules import ReplayMemory
+from .networks.tqc_network import GaussianPolicy, EnsembleQuantileCritic
+from ..modules import ReplayMemory
 import torch
 import torch.nn as nn
 
-from scripts.co_rl.core.utils.utils import hard_update, soft_update, quantile_huber_loss_f
+from ..utils.utils import hard_update, soft_update, quantile_huber_loss_f
 
 
 class TQC:

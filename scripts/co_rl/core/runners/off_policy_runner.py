@@ -12,13 +12,12 @@ import torch
 from collections import deque
 from torch.utils.tensorboard import SummaryWriter as TensorboardSummaryWriter
 
-from scripts import co_rl
-from scripts.co_rl.core.algorithms import SAC
-from scripts.co_rl.core.algorithms import TQC
-from scripts.co_rl.core.algorithms import TACO
-from scripts.co_rl.core.env import VecEnv
-from scripts.co_rl.core.modules import ReplayMemory
-from scripts.co_rl.core.utils import store_code_state
+from ..algorithms import SAC
+from ..algorithms import TQC
+from ..algorithms import TACO
+from ..env import VecEnv
+from ..modules import ReplayMemory
+from ..utils import store_code_state
 
 
 class OffPolicyRunner:

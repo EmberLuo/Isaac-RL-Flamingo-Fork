@@ -7,8 +7,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from scripts.co_rl.core.modules import ActorCritic
-from scripts.co_rl.core.storage import RolloutStorage
+from ..modules import ActorCritic
+from ..storage import RolloutStorage
 
 class PPO:
     actor_critic: ActorCritic

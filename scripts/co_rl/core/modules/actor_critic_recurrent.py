@@ -6,8 +6,8 @@ from __future__ import annotations
 import torch
 import torch.nn as nn
 
-from scripts.co_rl.core.modules import ActorCritic
-from scripts.co_rl.core.utils import unpad_trajectories, resolve_nn_activation
+from . import ActorCritic
+from ..utils import unpad_trajectories, resolve_nn_activation
 
 
 class ActorCriticRecurrent(ActorCritic):

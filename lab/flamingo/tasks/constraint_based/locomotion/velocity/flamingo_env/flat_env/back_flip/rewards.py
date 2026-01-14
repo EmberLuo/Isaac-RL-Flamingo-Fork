@@ -14,7 +14,7 @@ from isaaclab.assets import Articulation, RigidObject
 from isaaclab.managers import SceneEntityCfg, ManagerTermBase, RewardTermCfg
 from isaaclab.sensors import ContactSensor, RayCaster
 from lab.flamingo.tasks.manager_based.locomotion.velocity.sensors import LiftMask
-from isaaclab.utils.math import euler_xyz_from_quat, quat_rotate_inverse
+from isaaclab.utils.math import euler_xyz_from_quat, quat_apply_inverse
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv

@@ -1,14 +1,70 @@
+# Python
 **/__pycache__/
-*.egg-info
-logs/
-*.pt
-*.onnx
-outputs/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
 build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Isaac Sim / Isaac Lab
+logs/
+outputs/
+*.pt
+*.pth
+*.onnx
 *.usd
+*.usda
+*.usdc
 urdf/
 mjcf/
 *.thumbs
 .thumbs/
 *.asset_hash
 configuration/
+
+# Training outputs
+runs/
+wandb/
+tensorboard_logs/
+checkpoints/
+models/
+
+# Data
+data/
+datasets/
+*.pkl
+*.pickle
+*.hdf5
+*.h5
+
+# Documentation
+docs/_build/
+docs/.doctrees/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~

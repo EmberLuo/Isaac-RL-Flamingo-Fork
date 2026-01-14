@@ -14,7 +14,7 @@ from isaaclab.assets import Articulation, RigidObject
 from isaaclab.managers import SceneEntityCfg, ManagerTermBase, RewardTermCfg
 from isaaclab.sensors import ContactSensor, RayCaster
 from lab.flamingo.tasks.manager_based.locomotion.velocity.sensors import LiftMask
-from isaaclab.utils.math import euler_xyz_from_quat, quat_rotate_inverse
+from isaaclab.utils.math import euler_xyz_from_quat, quat_apply_inverse
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -1110,7 +1110,7 @@ def base_height_dynamic_wheel_l2(
 
 def link_x_vel_deviation_l2(env, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     asset = env.scene[asset_cfg.name]
-    weel_vel_b = torch.mean(quat_rotate_inverse(asset.data.body_link_quat_w[:, asset_cfg.body_ids], asset.data.body_link_lin_vel_w[:, asset_cfg.body_ids]), dim=1)
+    weel_vel_b = torch.mean(quat_apply_inverse(asset.data.body_link_quat_w[:, asset_cfg.body_ids], asset.data.body_link_lin_vel_w[:, asset_cfg.body_ids]), dim=1)
     root_vel_b = asset.data.root_lin_vel_b
     
     # minimize difference between root and wheel velocities
@@ -1322,6 +1322,6 @@ def reward_same_foot_x_position(
     foot_world = asset.data.body_link_pos_w[:, asset_cfg.body_ids, :]
     foot_base = foot_world - base_pos.unsqueeze(1)
     for i in range(len(asset_cfg.body_ids)):
-        foot_base[:,i,:] = quat_rotate_inverse(base_quat, foot_base[:,i,:])
+        foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     dx = foot_base[:,0,0] - foot_base[:,1,0]
     return torch.abs(dx)  # penalize both feet being too far apart and too close together

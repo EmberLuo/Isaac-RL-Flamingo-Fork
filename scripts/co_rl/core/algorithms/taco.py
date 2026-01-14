@@ -3,12 +3,12 @@
 
 from __future__ import annotations
 
-from scripts.co_rl.core.algorithms.networks.taco_network import *
-from scripts.co_rl.core.modules import TACOReplayMemory
+from .networks.taco_network import *
+from ..modules import TACOReplayMemory
 import torch
 import torch.nn as nn
 import itertools
-from scripts.co_rl.core.utils.utils import hard_update, soft_update, schedule
+from ..utils.utils import hard_update, soft_update, schedule
 
 
 class TACO:

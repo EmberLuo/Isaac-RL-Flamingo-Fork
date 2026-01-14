@@ -6,11 +6,11 @@
 
 import gymnasium as gym
 import torch
-from scripts.co_rl.core.env import VecEnv
+from ..env import VecEnv
 from isaaclab.envs import DirectRLEnv, ManagerBasedRLEnv
 from lab.flamingo.isaaclab.isaaclab.envs.manager_based_constraint_rl_env import ManagerBasedConstraintRLEnv
-from scripts.co_rl.core.wrapper import CoRlPolicyRunnerCfg
-from scripts.co_rl.core.utils.state_handler import StateHandler
+from . import CoRlPolicyRunnerCfg
+from ..utils.state_handler import StateHandler
 
 import os
 import csv

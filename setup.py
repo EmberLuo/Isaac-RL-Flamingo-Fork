@@ -1,9 +1,12 @@
+# Copyright (c) 2024-2025 Isaac Lab Project Developers
+# SPDX-License-Identifier: BSD-3-Clause
+
 """Installation script for the 'lab.flamingo' python package."""
 
 import os
 import toml
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # Obtain the extension data from the extension.toml file
 EXTENSION_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -12,17 +15,37 @@ EXTENSION_TOML_DATA = toml.load(os.path.join(EXTENSION_PATH, "config", "extensio
 
 # Minimum dependencies required prior to installation
 INSTALL_REQUIRES = [
-    # NOTE: Add dependencies
+    # base utilities
     "psutil",
-    "reportlab",
+    "colorama",
+    "tqdm",
+    "pyyaml",
+    "toml",
+    "prettytable",
+    # numerical computing
+    "numpy>=1.26.0,<2.0.0",
+    "pandas",
+    "scipy",
+    # visualization and rendering
+    "matplotlib",
+    "pillow",
+    "pyecharts",
+    "rich",
+    # geometry and robotics
+    "trimesh",
+    # rl specific
+    "gymnasium",
+    "tensorboard",
+    "tensorboardx",
 ]
 
 # Installation operation
 setup(
     # TODO: Change your package naming
     # -----------------------------------------------------------------
-    name="lab.flamingo",
-    packages=["lab.flamingo"],
+    name="isaac_rl_two_wheeled_legged_bot",
+    packages=find_packages(include=['lab', 'lab.*', 'scripts', 'scripts.*']),
+    package_dir={'': '.'},
     # -----------------------------------------------------------------
     author=EXTENSION_TOML_DATA["package"]["author"],
     maintainer=EXTENSION_TOML_DATA["package"]["maintainer"],
@@ -38,7 +61,11 @@ setup(
     classifiers=[
         "Natural Language :: English",
         "Programming Language :: Python :: 3.10",
-        "Isaac Sim :: 4.5",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Isaac Sim :: 4.5.0",
+        "Isaac Sim :: 5.0.0",
+        "Isaac Sim :: 5.1.0",
     ],
     zip_safe=False,
 )

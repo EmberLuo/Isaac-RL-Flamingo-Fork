@@ -10,11 +10,10 @@ import torch
 from collections import deque
 from torch.utils.tensorboard import SummaryWriter as TensorboardSummaryWriter
 
-from scripts import co_rl
-from scripts.co_rl.core.algorithms import SRMPPO
-from scripts.co_rl.core.env import VecEnv
-from scripts.co_rl.core.modules import ActorCritic, ActorCriticRecurrent, EmpiricalNormalization
-from scripts.co_rl.core.utils import store_code_state
+from ..algorithms import SRMPPO
+from ..env import VecEnv
+from ..modules import ActorCritic, ActorCriticRecurrent, EmpiricalNormalization
+from ..utils import store_code_state
 
 
 class SRMOnPolicyRunner:
@@ -73,7 +72,7 @@ class SRMOnPolicyRunner:
         self.tot_timesteps = 0
         self.tot_time = 0
         self.current_learning_iteration = 0
-        self.git_status_repos = [co_rl.__file__]
+        self.git_status_repos = [__file__]
 
     def learn(self, num_learning_iterations: int, init_at_random_ep_len: bool = False):
         # initialize writer
@@ -83,12 +82,12 @@ class SRMOnPolicyRunner:
             self.logger_type = self.logger_type.lower()
 
             if self.logger_type == "neptune":
-                from scripts.co_rl.utils.neptune_utils import NeptuneSummaryWriter
+                from ...utils.neptune_utils import NeptuneSummaryWriter
 
                 self.writer = NeptuneSummaryWriter(log_dir=self.log_dir, flush_secs=10, cfg=self.cfg)
                 self.writer.log_config(self.env.cfg, self.cfg, self.alg_cfg, self.policy_cfg)
             elif self.logger_type == "wandb":
-                from scripts.co_rl.utils.wandb_utils import WandbSummaryWriter
+                from ...utils.wandb_utils import WandbSummaryWriter
 
                 self.writer = WandbSummaryWriter(log_dir=self.log_dir, flush_secs=10, cfg=self.cfg)
                 self.writer.log_config(self.env.cfg, self.cfg, self.alg_cfg, self.policy_cfg)

@@ -69,7 +69,7 @@ class MySceneCfg(InteractiveSceneCfg):
     height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/base_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.075, size=[0.6, 0.5]),
         debug_vis=False,
         mesh_prim_paths=["/World/ground"],
@@ -77,7 +77,7 @@ class MySceneCfg(InteractiveSceneCfg):
     base_height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/base_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.05, size=[0.025, 0.025]),
         debug_vis=True,
         mesh_prim_paths=["/World/ground"],
@@ -85,7 +85,7 @@ class MySceneCfg(InteractiveSceneCfg):
     left_wheel_height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/left_wheel_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.05, size=[0.025, 0.025]),
         debug_vis=True,
         mesh_prim_paths=["/World/ground"],
@@ -93,7 +93,7 @@ class MySceneCfg(InteractiveSceneCfg):
     right_wheel_height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/right_wheel_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.05, size=[0.025, 0.025]),
         debug_vis=True,
         mesh_prim_paths=["/World/ground"],
@@ -102,7 +102,7 @@ class MySceneCfg(InteractiveSceneCfg):
         prim_path="{ENV_REGEX_NS}/Robot/left_wheel_static_link",
         history_length=10,
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.07, size=[0.29, 0.29]),
         debug_vis=True,
         mesh_prim_paths=["/World/ground"],
@@ -112,7 +112,7 @@ class MySceneCfg(InteractiveSceneCfg):
         prim_path="{ENV_REGEX_NS}/Robot/right_wheel_static_link",
         history_length=10,
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
-        attach_yaw_only=True,
+        ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.07, size=[0.29, 0.29]),
         debug_vis=True,
         mesh_prim_paths=["/World/ground"],

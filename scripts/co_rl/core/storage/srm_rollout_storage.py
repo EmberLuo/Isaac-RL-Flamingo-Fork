@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import torch
 
-from scripts.co_rl.core.utils import split_and_pad_trajectories
+from ..utils import split_and_pad_trajectories
 
 
 class SRMRolloutStorage:

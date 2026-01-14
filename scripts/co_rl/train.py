@@ -12,7 +12,7 @@ from isaaclab.app import AppLauncher
 
 # local imports
 import cli_args  # isort: skip
-from scripts.co_rl.core.runners import OffPolicyRunner
+from core.runners import OffPolicyRunner
 
 # add argparse arguments
 parser = argparse.ArgumentParser(description="Train an RL agent with CO-RL.")

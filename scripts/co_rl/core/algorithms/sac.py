@@ -3,12 +3,12 @@
 
 from __future__ import annotations
 
-from scripts.co_rl.core.algorithms.networks.sac_network import GaussianPolicy, Twin_Q_net
-from scripts.co_rl.core.modules import ReplayMemory
+from .networks.sac_network import GaussianPolicy, Twin_Q_net
+from ..modules import ReplayMemory
 import torch
 import torch.nn as nn
 
-from scripts.co_rl.core.utils.utils import hard_update, soft_update
+from ..utils.utils import hard_update, soft_update
 
 
 class SAC:

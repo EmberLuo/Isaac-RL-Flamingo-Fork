@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 
 # local imports
 import cli_args  # isort: skip
-from scripts.co_rl.core.runners import OffPolicyRunner
+from core.runners import OffPolicyRunner
 
-from scripts.co_rl.core.utils.str2bool import str2bool
-from scripts.co_rl.core.utils.analyzer import Analyzer
+from core.utils.str2bool import str2bool
+from core.utils.analyzer import Analyzer
 
 # add argparse arguments
 parser = argparse.ArgumentParser(description="Train an RL agent with CO-RL.")
@@ -66,10 +66,10 @@ import gymnasium as gym
 import os
 import torch
 
-from scripts.co_rl.core.runners import OnPolicyRunner, SRMOnPolicyRunner
+from core.runners import OnPolicyRunner, SRMOnPolicyRunner
 from isaaclab.utils.dict import print_dict
 
-from scripts.co_rl.core.wrapper import (
+from core.wrapper import (
     CoRlPolicyRunnerCfg,
     CoRlVecEnvWrapper,
     export_env_as_pdf,

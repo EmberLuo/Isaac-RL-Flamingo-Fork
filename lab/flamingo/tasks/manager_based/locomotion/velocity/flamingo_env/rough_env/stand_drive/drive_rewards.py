@@ -10,7 +10,7 @@ from isaaclab.assets import Articulation, RigidObject
 from isaaclab.managers import SceneEntityCfg, ManagerTermBase, RewardTermCfg
 from isaaclab.sensors import ContactSensor, RayCaster
 from lab.flamingo.tasks.manager_based.locomotion.velocity.sensors import LiftMask
-from isaaclab.utils.math import euler_xyz_from_quat, quat_rotate_inverse
+from isaaclab.utils.math import euler_xyz_from_quat, quat_apply_inverse
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -109,7 +109,7 @@ def reward_nominal_foot_position_adaptive(
     # Calculate reward per foot
     reward = torch.zeros(num_envs, device=device)
     for i in range(len(asset_cfg.body_ids)):
-        fb = quat_rotate_inverse(base_quat, foot_base[:, i, :])  # [N,3]
+        fb = quat_apply_inverse(base_quat, foot_base[:, i, :])  # [N,3]
         err = nominal_height[:, i] - fb[:, 2]                    # [N]
         reward += torch.exp(-err.square() * temperature)
 
@@ -143,7 +143,7 @@ def reward_nominal_foot_position(
     reward = torch.zeros(env.num_envs, device=env.device)
     nominal_height = -(base_height_target - foot_radius)
     for i in range(len(asset_cfg.body_ids)):
-        fb = quat_rotate_inverse(base_quat, foot_base[:,i,:])  # [N,3]
+        fb = quat_apply_inverse(base_quat, foot_base[:,i,:])  # [N,3]
         err = nominal_height - fb[:,2]
         reward += torch.exp(-(torch.square(err))/sigma)
     vel_norm = torch.norm(cmds[:, :3], dim=1)
@@ -165,7 +165,7 @@ def reward_leg_symmetry(
     foot_world = asset.data.body_link_pos_w[:, asset_cfg.body_ids, :]
     foot_base = foot_world - base_pos.unsqueeze(1)
     for i in range(len(asset_cfg.body_ids)):
-        foot_base[:,i,:] = quat_rotate_inverse(base_quat, foot_base[:,i,:])
+        foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     err = (foot_base[:,0,1].abs() - foot_base[:,1,1].abs())
     return torch.exp(-(temperature * torch.square(err)))
 
@@ -183,7 +183,7 @@ def reward_same_foot_x_position(
     foot_world = asset.data.body_link_pos_w[:, asset_cfg.body_ids, :]
     foot_base = foot_world - base_pos.unsqueeze(1)
     for i in range(len(asset_cfg.body_ids)):
-        foot_base[:,i,:] = quat_rotate_inverse(base_quat, foot_base[:,i,:])
+        foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     dx = foot_base[:,0,0] - foot_base[:,1,0]
     return torch.abs(dx)
 
@@ -200,7 +200,7 @@ def reward_same_foot_y_position(
     foot_world = asset.data.body_link_pos_w[:, asset_cfg.body_ids, :]
     foot_base = foot_world - base_pos.unsqueeze(1)
     for i in range(len(asset_cfg.body_ids)):
-        foot_base[:,i,:] = quat_rotate_inverse(base_quat, foot_base[:,i,:])
+        foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     dy = (foot_base[:,0,1].abs() - foot_base[:,1,1].abs())
     return torch.abs(dy)
 
@@ -217,7 +217,7 @@ def reward_same_foot_z_position(
     foot_world = asset.data.body_link_pos_w[:, asset_cfg.body_ids, :]
     foot_base = foot_world - base_pos.unsqueeze(1)
     for i in range(len(asset_cfg.body_ids)):
-        foot_base[:,i,:] = quat_rotate_inverse(base_quat, foot_base[:,i,:])
+        foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     dz = foot_base[:,0,2] - foot_base[:,1,2]
     return torch.square(dz)
 

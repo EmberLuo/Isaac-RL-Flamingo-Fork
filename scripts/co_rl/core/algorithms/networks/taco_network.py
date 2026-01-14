@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Normal
-from scripts.co_rl.core.utils.utils import weight_init, TruncatedNormal
+from ...utils.utils import weight_init, TruncatedNormal
 
 class RandomShiftsAug(nn.Module):
     def __init__(self, pad):

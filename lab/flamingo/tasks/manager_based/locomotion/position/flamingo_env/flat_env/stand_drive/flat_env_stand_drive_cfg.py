@@ -64,9 +64,7 @@ class FlamingoRewardsCfg():
     orientation_tracking = RewTerm(
         func=mdp.heading_command_error_abs,
         weight= 0.5,
-        params={"command_name": "pose_command",
-                "temperature" :  4.0,
-                "k" : 1},
+        params={"command_name": "pose_command"},
     )
     
     termination_penalty = RewTerm(func=mdp.is_terminated, weight=-200.0)
