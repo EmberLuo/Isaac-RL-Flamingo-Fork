@@ -13,7 +13,7 @@ from isaaclab.managers import SceneEntityCfg
 from isaaclab.utils.math import subtract_frame_transforms
 
 from isaaclab.sensors import FrameTransformer
-from isaaclab.utils.math import quat_rotate_inverse
+from isaaclab.utils.math import quat_apply_inverse
 
 
 if TYPE_CHECKING:
@@ -58,7 +58,7 @@ def obstacle_ee_aabb_distance(
     # 2. Transform EE position into Obstacle's LOCAL Frame
     # (World 상의 거리 벡터를 물체의 회전 반대 방향으로 회전시킴)
     rel_pos_w = p_w - c_w
-    rel_pos_local = quat_rotate_inverse(q_w, rel_pos_w)
+    rel_pos_local = quat_apply_inverse(q_w, rel_pos_w)
 
     # 3. Obstacle size (Half-extent)
     obstacle_size = torch.tensor(

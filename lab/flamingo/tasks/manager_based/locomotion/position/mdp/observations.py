@@ -14,7 +14,7 @@ from isaaclab.utils.math import wrap_to_pi
 from isaaclab.assets import Articulation, RigidObject
 from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import RayCaster
-from isaaclab.utils.math import euler_xyz_from_quat, yaw_quat, quat_rotate, yaw_quat
+from isaaclab.utils.math import euler_xyz_from_quat, yaw_quat, quat_apply
 from isaaclab.sensors import ContactSensor
 from isaaclab.markers import VisualizationMarkers
 
@@ -269,7 +269,7 @@ def generated_world_frame_pose_commands(env: ManagerBasedRLEnv, command_name: st
 
     # 4) local→world 회전: yaw 쿼터니언(heading)만 뽑아서 forward rotate
     yaw_q       = yaw_quat(root_quat)                                # (N, 4)
-    world_offset = quat_rotate(yaw_q, pos_command_b)                # (N, 3)
+    world_offset = quat_apply(yaw_q, pos_command_b)                # (N, 3)
 
     # 5) translation 보정
     pos_command_w = root_pos + world_offset                         # (N, 3)

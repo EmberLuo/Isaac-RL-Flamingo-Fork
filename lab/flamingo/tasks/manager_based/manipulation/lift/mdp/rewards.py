@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 from isaaclab.assets import RigidObject
 from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import FrameTransformer
-from isaaclab.utils.math import combine_frame_transforms, quat_rotate_inverse
+from isaaclab.utils.math import combine_frame_transforms, quat_apply_inverse
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -158,10 +158,10 @@ def ee_orientation_align(
     
     # 2. 쿼터니언을 회전 행렬로 변환하여 로컬 Z축 벡터 추출
     # (Isaac Lab의 math 유틸리티 사용)
-    from isaaclab.utils.math import quat_rotate
-    
+    from isaaclab.utils.math import quat_apply
+
     # 로봇의 그리퍼가 향하는 방향(로컬 Z축) 벡터 계산
-    ee_z_dir = quat_rotate(ee_quat, torch.tensor([0.0, 0.0, 1.0], device=env.device).repeat(env.num_envs, 1))
+    ee_z_dir = quat_apply(ee_quat, torch.tensor([0.0, 0.0, 1.0], device=env.device).repeat(env.num_envs, 1))
     
     # 3. 목표 방향 (World의 -Z 방향, 즉 수직 아래)
     target_dir = torch.tensor([0.0, 0.0, -1.0], device=env.device).repeat(env.num_envs, 1)
