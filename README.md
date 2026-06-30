@@ -9,6 +9,7 @@
 > **Note**: This repository is forked from [jaykorea/Isaac-RL-Two-wheel-Legged-Bot](https://github.com/jaykorea/Isaac-RL-Two-wheel-Legged-Bot) and has been modified for personal use and experimentation.
 
 ## **✨ Key Features**
+
 ✔️ **Flamingo Robot Support**: Multiple Flamingo variants (rev.0.1.4, Edu v1, Light v1, 4W4L, Humanoid)  
 ✔️ **Stack Environment**: Observations can be stacked for temporal information  
 ✔️ **Constraint Manager**: [Constraints as Termination (CaT)](https://arxiv.org/abs/2403.18765) implementation  
@@ -16,6 +17,7 @@
 ✔️ **Sim2Real Transfer**: Zero-shot transfer capabilities demonstrated  
 
 ## **🔧 My Modifications**
+
 - ✅ **Updated to Isaac Sim 5.1.0 + Isaac Lab 2.3.0** (from 4.5 + 2.0.0)
 - ✅ **API Migration**: Migrated deprecated APIs
   - `attach_yaw_only=True` → `ray_alignment="yaw"`
@@ -24,6 +26,7 @@
 - ✅ **Documentation**: Added detailed configuration parameters and setup guide  
 
 ## Sim2Real - ZeroShot Transfer
+
 <table>
     <td><img src="https://github.com/user-attachments/assets/bb14612c-85c2-43ce-a7df-8b09ee4d3f69" width="800" height="400"/></td>
 </table>
@@ -38,8 +41,8 @@
   </tr>
 </table>
 
-
 ## Isaac Lab Flamingo
+
 <table>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/0037889b-bab7-4686-a9a5-46ea9bbe6ac2" width="385" height="240"/></td>
@@ -48,6 +51,7 @@
 </table>
 
 ## Sim 2 Sim framework - Lab to MuJoCo
+
 <table>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/edcc4077-e082-4fce-90a6-b10c94869aad" width="385" height="240"/></td>
@@ -59,6 +63,7 @@
 - You can simply inference trained policy (basically export as .onnx from isaac lab)
 
 ## 📋 Requirements
+
 - **OS**: Ubuntu 20.04 or 22.04 (tested on 24.04)
 - **Python**: 3.10
 - **Isaac Sim**: 5.1.0
@@ -79,6 +84,7 @@ sudo sysctl -p
 ### 2. Install Isaac Sim 5.1.0
 
 Follow the official installation guide:
+
 ```
 https://docs.omniverse.nvidia.com/isaacsim/latest/installation/index.html
 ```
@@ -94,12 +100,14 @@ cd IsaacLab
 ### 4. Install This Package
 
 **i. Clone repository**
+
 ```bash
 git clone https://github.com/EmberLuo/Isaac-RL-Flamingo-Fork
 cd Isaac-RL-Flamingo-Fork
 ```
 
 **ii. Install package**
+
 ```bash
 conda activate Isaac-RL-Two-wheel-Legged-Bot  # or your Isaac Lab conda env
 pip install -e .
@@ -108,6 +116,7 @@ pip install -e .
 **iii. Unzip USD assets**
 
 Since git doesn't correctly upload '.usd' files, manually unzip the USD files:
+
 ```bash
 # Example path: lab/flamingo/assets/data/Robots/Flamingo/flamingo_rev01_4_1/
 cd lab/flamingo/assets/data/Robots/Flamingo/
@@ -119,6 +128,7 @@ cd lab/flamingo/assets/data/Robots/Flamingo/
 ### Training
 
 **Basic command:**
+
 ```bash
 python scripts/co_rl/train.py --task {TASK_NAME} --algo {ALGORITHM} \
     --num_envs {NUM_ENVS} --headless \
@@ -126,6 +136,7 @@ python scripts/co_rl/train.py --task {TASK_NAME} --algo {ALGORITHM} \
 ```
 
 **Example - Velocity tracking (Flat terrain):**
+
 ```bash
 python scripts/co_rl/train.py --task Isaac-Velocity-Flat-Flamingo-v1-ppo \
     --algo ppo --num_envs 4096 --headless \
@@ -133,6 +144,7 @@ python scripts/co_rl/train.py --task Isaac-Velocity-Flat-Flamingo-v1-ppo \
 ```
 
 **Example - Position tracking (Rough terrain):**
+
 ```bash
 python scripts/co_rl/train.py --task Isaac-Position-Rough-Flamingo-v1-ppo \
     --algo ppo --num_envs 4096 --headless \
@@ -143,6 +155,7 @@ python scripts/co_rl/train.py --task Isaac-Position-Rough-Flamingo-v1-ppo \
 ### Evaluation/Play
 
 **Basic command:**
+
 ```bash
 python scripts/co_rl/play.py --task {TASK_NAME} --algo {ALGORITHM} \
     --num_envs 64 \
@@ -151,6 +164,7 @@ python scripts/co_rl/play.py --task {TASK_NAME} --algo {ALGORITHM} \
 ```
 
 **Example:**
+
 ```bash
 python scripts/co_rl/play.py --task Isaac-Velocity-Flat-Flamingo-Play-v1-ppo \
     --algo ppo --num_envs 64 \
@@ -197,20 +211,24 @@ python scripts/co_rl/play.py --task Isaac-Velocity-Flat-Flamingo-Play-v1-ppo \
 ### Manager-Based Tasks
 
 **Velocity Tracking:**
+
 - `Isaac-Velocity-Flat-Flamingo-v1-ppo` - Flat terrain velocity control
 - `Isaac-Velocity-Rough-Flamingo-v1-ppo` - Rough terrain velocity control
 - `Isaac-Velocity-Flat-Flamingo-Light-v1-ppo` - Light version
 - `Isaac-Velocity-Flat-Flamingo-4W4L-v1-ppo` - 4-wheel-4-leg variant
 
 **Position Tracking:**
+
 - `Isaac-Position-Flat-Flamingo-v1-ppo` - Flat terrain position control
 - `Isaac-Position-Rough-Flamingo-v1-ppo` - Rough terrain position control
 
 **Humanoid:**
+
 - `Isaac-Velocity-Flat-Humanoid-v1-ppo` - Humanoid locomotion
 - `Isaac-Velocity-Rough-Humanoid-v1-ppo` - Rough terrain humanoid
 
 ### Constraint-Based Tasks
+
 - `Isaac-Velocity-Flat-Flamingo-Constraint-v1-ppo` - With CaT constraints
 - `Isaac-Velocity-Rough-Flamingo-Constraint-v1-ppo` - Rough terrain with constraints
 
@@ -243,6 +261,7 @@ Isaac-RL-Two-wheel-Legged-Bot/
 ## 🙏 Credits
 
 This repository is based on:
+
 - Original repository: [jaykorea/Isaac-RL-Two-wheel-Legged-Bot](https://github.com/jaykorea/Isaac-RL-Two-wheel-Legged-Bot)
 - [Isaac Sim](https://docs.omniverse.nvidia.com/isaacsim/) by NVIDIA
 - [Isaac Lab](https://isaac-sim.github.io/IsaacLab/) by NVIDIA
