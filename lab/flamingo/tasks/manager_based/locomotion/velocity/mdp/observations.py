@@ -281,3 +281,30 @@ def measure_contact_forces(env: ManagerBasedRLEnv, sensor_cfg: SceneEntityCfg) -
     RL_contact_forces = contact_sensor.data.net_forces_w[:, sensor_cfg.body_ids[2]]
     RR_contact_forces = contact_sensor.data.net_forces_w[:, sensor_cfg.body_ids[3]]
     return torch.concat([FL_contact_forces,FR_contact_forces,RL_contact_forces,RR_contact_forces],dim=1)
+
+
+# ---------------------------------------------------------------------------
+# VMC (wheel-legged) observations
+# ---------------------------------------------------------------------------
+# These read the virtual-leg state computed by the VMCAction term. The term is
+# resolved by its name in the ActionsCfg (default "vmc"). See vmc_action.py.
+
+
+def vmc_theta0(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
+    """Virtual-leg angle theta0 for both legs. Shape (num_envs, 2)."""
+    return env.action_manager.get_term(action_name).theta0
+
+
+def vmc_theta0_dot(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
+    """Virtual-leg angular velocity for both legs. Shape (num_envs, 2)."""
+    return env.action_manager.get_term(action_name).theta0_dot
+
+
+def vmc_l0(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
+    """Virtual-leg length L0 for both legs. Shape (num_envs, 2)."""
+    return env.action_manager.get_term(action_name).L0
+
+
+def vmc_l0_dot(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
+    """Virtual-leg length rate for both legs. Shape (num_envs, 2)."""
+    return env.action_manager.get_term(action_name).L0_dot

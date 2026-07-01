@@ -1439,3 +1439,18 @@ def reward_same_foot_x_position(
         foot_base[:,i,:] = quat_apply_inverse(base_quat, foot_base[:,i,:])
     dx = foot_base[:,0,0] - foot_base[:,1,0]
     return torch.abs(dx)  # penalize both feet being too far apart and too close together
+
+
+# ---------------------------------------------------------------------------
+# VMC (wheel-legged) rewards
+# ---------------------------------------------------------------------------
+
+
+def vmc_leg_symmetry_l2(env: "ManagerBasedRLEnv", action_name: str = "vmc") -> torch.Tensor:
+    """Penalize asymmetry between the two legs' virtual angles (source: _reward_nominal_state).
+
+    Encourages the left/right virtual-leg angles ``theta0`` to match, keeping the
+    base level. Reads the VMC action term's computed ``theta0`` (shape (N, 2)).
+    """
+    theta0 = env.action_manager.get_term(action_name).theta0
+    return torch.square(theta0[:, 0] - theta0[:, 1])
