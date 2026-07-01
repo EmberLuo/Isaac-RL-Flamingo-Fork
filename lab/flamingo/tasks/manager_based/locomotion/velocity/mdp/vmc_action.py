@@ -121,6 +121,23 @@ class VMCAction(ActionTerm):
 
     def process_actions(self, actions: torch.Tensor):
         # called once per env step: cache the (constant-within-step) virtual-leg references
+        #
+        # Clamp the raw policy output to [-1, 1] BEFORE using it. This mirrors
+        # play.py (which clamps the policy action), so train and play behave
+        # identically. Critically, it also bounds what the stock reward/obs
+        # terms see: ``action_rate_l2`` and ``last_action`` read
+        # ``env.action_manager.action`` (the RAW, unclamped buffer), not the
+        # VMC-processed efforts. Without this clamp an occasional large raw
+        # action makes action_rate = sum((a - a_prev)^2) blow up to ~1e23,
+        # driving the value loss to inf, the gradients to NaN, and crashing PPO
+        # with ``Normal(loc=nan)``. The VMC torque clamp does NOT protect these
+        # terms because they never see the processed efforts.
+        #
+        # WL's VMC term is the ONLY action term (total action dim == 6), so the
+        # manager's action buffer IS these 6 dims; clamping it in place is safe
+        # and does not affect any other task.
+        actions = torch.clamp(actions, -1.0, 1.0)
+        self._env.action_manager._action[:] = torch.clamp(self._env.action_manager._action, -1.0, 1.0)
         self._raw_actions[:] = actions
         a = actions
         self._theta0_ref = torch.stack((a[:, 0], a[:, 3]), dim=1) * self.cfg.action_scale_theta
@@ -196,7 +213,7 @@ class VMCActionCfg(ActionTermCfg):
     # action scaling
     action_scale_theta: float = 0.5
     action_scale_l0: float = 0.1
-    action_scale_vel: float = 10.0
+    action_scale_vel: float = 12.0
     l0_offset: float = 0.24
 
     # virtual PD gains
@@ -210,4 +227,3 @@ class VMCActionCfg(ActionTermCfg):
     # torque clamps (URDF effort limits)
     leg_effort_limit: float = 30.0
     wheel_effort_limit: float = 5.0
-
