@@ -91,12 +91,12 @@ class CommandsCfg:
     base_velocity = mdp.UniformVelocityWithZCommandCfg(
         asset_name="robot",
         resampling_time_range=(5.0, 5.0),
-        rel_standing_envs=0.02,
+        rel_standing_envs=0.05,
         rel_heading_envs=0.0,
         heading_command=False,
         debug_vis=True,
         ranges=mdp.UniformVelocityWithZCommandCfg.Ranges(
-            lin_vel_x=(-1.0, 1.0), lin_vel_y=(-0.0, 0.0), ang_vel_z=(-3.14, 3.14), pos_z=(0.20, 0.30)
+            lin_vel_x=(-1.0, 1.0), lin_vel_y=(-0.0, 0.0), ang_vel_z=(-1.5, 1.5), pos_z=(0.20, 0.30)
         ),
     )
 
@@ -327,4 +327,3 @@ class LocomotionVelocityFlatEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.scene.height_scanner = None
         # no terrain curriculum on flat ground
         self.curriculum.terrain_levels = None
-
