@@ -213,7 +213,7 @@ class VMCActionCfg(ActionTermCfg):
     # action scaling
     action_scale_theta: float = 0.5
     action_scale_l0: float = 0.1
-    action_scale_vel: float = 12.0
+    action_scale_vel: float = 16.0
     l0_offset: float = 0.24
 
     # virtual PD gains
