@@ -354,6 +354,7 @@ class SRMPPO:
             loss.backward()
             nn.utils.clip_grad_norm_(self.actor_critic.parameters(), self.max_grad_norm)
             self.optimizer.step()
+            self.actor_critic.clamp_std_()
 
             mean_value_loss += value_loss.item()
             mean_surrogate_loss += surrogate_loss.item()

@@ -112,7 +112,9 @@ class VMCAction(ActionTerm):
         """Map virtual (force F along leg, torque T about hip) to joint torques (T1 hip, T2 knee)."""
         theta0v = theta0 + self._pi / 2
         t11 = self._l1 * torch.sin(theta0v - theta1) - self._l2 * torch.sin(theta1 + theta2 - theta0v)
-        t12 = (self._l1 * torch.cos(theta0v - theta1) - self._l2 * torch.cos(theta1 + theta2 - theta0v)) / L0
+        # t12 = (self._l1 * torch.cos(theta0v - theta1) - self._l2 * torch.cos(theta1 + theta2 - theta0v)) / L0
+        t12 = (-self._l1 * torch.cos(theta0v - theta1) - self._l2 * torch.cos(theta1 + theta2 - theta0v)) / L0
+        # t12 = -d(theta0)/d(theta1): the l1 term is NEGATIVE (cos is even, so the l2 term keeps its sign)
         t21 = -self._l2 * torch.sin(theta1 + theta2 - theta0v)
         t22 = (-self._l2 * torch.cos(theta1 + theta2 - theta0v)) / L0
         T1 = t11 * F - t12 * T
@@ -211,16 +213,16 @@ class VMCActionCfg(ActionTermCfg):
     l2: float = 0.25
 
     # action scaling
-    action_scale_theta: float = 0.5
-    action_scale_l0: float = 0.1
-    action_scale_vel: float = 16.0
+    action_scale_theta: float = 0.15
+    action_scale_l0: float = 0.05
+    action_scale_vel: float = 12.0
     l0_offset: float = 0.24
 
     # virtual PD gains
     kp_theta: float = 50.0
     kd_theta: float = 3.0
     kp_l0: float = 900.0
-    kd_l0: float = 20.0
+    kd_l0: float = 80.0
     wheel_damping: float = 0.5
     feedforward_force: float = 40.0
 

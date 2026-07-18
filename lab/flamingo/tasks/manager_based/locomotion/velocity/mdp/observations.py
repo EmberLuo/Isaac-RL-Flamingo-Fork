@@ -308,3 +308,8 @@ def vmc_l0(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
 def vmc_l0_dot(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
     """Virtual-leg length rate for both legs. Shape (num_envs, 2)."""
     return env.action_manager.get_term(action_name).L0_dot
+
+
+def vmc_wheel_vel(env: ManagerBasedRLEnv, action_name: str = "vmc") -> torch.Tensor:
+    """Canonical wheel speed, positive forward on both sides. Shape (num_envs, 2)."""
+    return env.action_manager.get_term(action_name).wheel_vel

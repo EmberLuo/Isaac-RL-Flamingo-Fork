@@ -192,7 +192,10 @@ class WlVmc:
     ) -> tuple[np.ndarray, np.ndarray]:
         theta0v = theta0 + np.pi / 2.0
         t11 = self.cfg.l1 * np.sin(theta0v - theta1) - self.cfg.l2 * np.sin(theta1 + theta2 - theta0v)
-        t12 = (self.cfg.l1 * np.cos(theta0v - theta1) - self.cfg.l2 * np.cos(theta1 + theta2 - theta0v)) / l0
+        # Upstream Wheel-Legged-Gym formula (kept for reference; its l1 sign is incorrect):
+        # t12 = (self.cfg.l1 * np.cos(theta0v - theta1) - self.cfg.l2 * np.cos(theta1 + theta2 - theta0v)) / l0
+        t12 = (-self.cfg.l1 * np.cos(theta0v - theta1) - self.cfg.l2 * np.cos(theta1 + theta2 - theta0v)) / l0
+        # t12 = -d(theta0)/d(theta1): the l1 term is NEGATIVE (must match vmc_action.py).
         t21 = -self.cfg.l2 * np.sin(theta1 + theta2 - theta0v)
         t22 = (-self.cfg.l2 * np.cos(theta1 + theta2 - theta0v)) / l0
         return t11 * force - t12 * torque, t21 * force - t22 * torque
